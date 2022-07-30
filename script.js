@@ -1,12 +1,31 @@
+const wrapperElement = document.getElementById('wrapper');
+
 const gameBoardObject = (() => {
-    const gameBoard = [[' ','|',' ','|',' ',],
-                        ['_','_','_','_','_',],
-                        [' ','|',' ','|',' ',],
-                        ['_','_','_','_','_',],
-                        [' ','|',' ','|',' ',],
+    let space = '..';
+    let xShape = 'X';
+    let oShape = 'O';
+    const gameBoard = [[xShape,'|',space,'|',space,],
+                        ['-','-','-','-','-',],
+                        [xShape,'|',oShape,'|',space,],
+                        ['-','-','-','-','-',],
+                        [space,'|',space,'|',oShape,],
                         ];
 
-    return {gameBoard};
+    const displayGameBoard = () => {
+
+        for (row of gameBoard) {
+            const rowElement = document.createElement('div');
+            
+            for (space of row) {
+                rowElement.append(space);
+
+            }
+            wrapperElement.appendChild(rowElement);
+            console.log(row);
+        }
+
+    }
+    return {displayGameBoard};
 })();
 
 const displayController = (() => {
@@ -22,7 +41,7 @@ const players = () => {
     };
 }
 
-console.log(gameBoardObject.gameBoard);
+gameBoardObject.displayGameBoard();
 
 const player1 = players();
 player1.playTurn();
