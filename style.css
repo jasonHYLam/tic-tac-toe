@@ -19,3 +19,7 @@
 #wrapper div {
     font-size: var(--marker-size);
 }
+
+button {
+    background-color: red;
+}

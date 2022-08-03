@@ -1,32 +1,44 @@
 const wrapperElement = document.getElementById('wrapper');
 
+const winningCombinationsObject = (() => {
+    const winningCombinations = [
+        ["x","x","x","","","","","","",],
+        ["","","","x","x","x","","","",],
+        ["","","","","","","x","x","x",],
+        ["x","","","x","","","x","","",],
+        ["","x","","","x","","","x","",],
+        ["","","x","","","x","","","x",],
+        ["x","","","","x","","","","x",],
+        ["","","x","","x","","x","","",],
+    ];
+
+    return {winningCombinations}
+})();
 
 const gameBoardObject = (() => {
 
-    const gameBoardOld = [" "," "," "," "," "," "," "," "," ",];
+    const gameBoard = [" "," "," "," "," "," "," "," "," ",];
     const gameBoardCurrent = ["x","x","x","x","x","x","x","x","x",];
-    const gameBoard = ["1","2","3","4","5","6","7","8","9",];
+    const gameBoard3 = ["1","2","3","4","5","6","7","8","9",];
 
-
-    const getBoardIndex = (index) => {
-        console.log(gameBoard[index]);
+    const setCell = (board, marker, index) => {
+        board[index] = marker;
+        // return(board);
     }
-    const setCell = (marker, index) => {
-        gameBoard[index] = marker;
-        console.log(gameBoard);
 
-    }
-    return {gameBoard, getBoardIndex, setCell};
+    const getBoard = () => {
+        return [...gameBoard];
+    } 
+    return {getBoard, setCell};
 })();
 
 const displayController = (() => {
 
-    const gameBoard = gameBoardObject.gameBoard
 
-    const displayGameBoard = () => {
+    const displayGameBoard = (board) => {
 
         removePreviousGameBoard();
-        for (space of gameBoard) {
+        for (const space of board) {
             const spaceElement = document.createElement('div');
             spaceElement.className = "clickable-space";
             spaceElement.textContent = space;
@@ -36,63 +48,59 @@ const displayController = (() => {
 
     const removePreviousGameBoard = () => {
 
-        // if (wrapperElement.firstChild) {
-        //     for (child of (wrapperElement.children)) {
-        //         child.parentNode.removeLastChild(child);
-        //     }
-        // }
         while (wrapperElement.lastChild) {
             wrapperElement.removeChild(wrapperElement.lastChild);
         }
-        console.log(wrapperElement);
 
     }
     return {displayGameBoard};
-
 })();
 
 const player = (name, marker) => {
-
-    const playTurn = () => {
-        console.log("place turned");
-    }
     return {
-        name,marker, playTurn
+        name,marker
     };
 }
 
-
-
-
 const game = (() => {
-    player1 = player("jaleel","x");
-    player2 = player("hm","o");
+    const player1 = player("jaleel","x");
+    const player2 = player("hm","o");
 
     let currentPlayer = player1;
 
-    displayController.displayGameBoard();
+    const changePlayer = () => {
+        if (currentPlayer == player1 ? currentPlayer = player2 : currentPlayer = player1);
+    }
+
+    const board = gameBoardObject.getBoard();
+
+    displayController.displayGameBoard(board);
 
     const spaces = document.querySelectorAll(".clickable-space");
 
-    spaces.forEach((e, index) => {
-        e.addEventListener('click', function(event) {
-            gameBoardObject.getBoardIndex(index);
-            gameBoardObject.setCell(currentPlayer.marker, index);
 
-            console.log(gameBoardObject.gameBoard);
+    document.addEventListener('click', function(e) {
+        if (e.target.className == 'clickable-space') {
+            let space = e.target;
+            let index = Array.from(space.parentNode.children).indexOf(space);
+            gameBoardObject.setCell(board,currentPlayer.marker, index);
+            displayController.displayGameBoard(board);
+            changePlayer();
 
-            displayController.displayGameBoard();
+        }
+        
 
-        })
-    });
+    })
 
+    // spaces.forEach((e, index) => {
+    //     e.addEventListener('click', function(event) {
+    //         gameBoardObject.setCell(board, player1.marker, index);
+    //         console.log(board);
 
-    console.log(player1.marker)
-    console.log("hehe pinf");
-    return {
-        player1, player2, gameBoardObject
-    };
+    //         displayController.displayGameBoard(board);
 
+    //         changePlayer();
+    //         console.log(currentPlayer.marker);
+    //     });
+    // });
 })();
-
-game;
