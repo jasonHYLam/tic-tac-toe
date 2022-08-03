@@ -1,0 +1,21 @@
+:root {
+    --grid-length: 300px;
+    --marker-size: 50px;
+    --grid-gap-size: 20px;
+}
+.clickable-space {
+    background-color: yellowgreen;
+}
+
+#wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: var(--grid-length);
+    height: var(--grid-length);
+    gap: var(--grid-gap-size);
+}
+
+
+#wrapper div {
+    font-size: var(--marker-size);
+}
