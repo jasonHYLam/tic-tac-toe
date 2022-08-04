@@ -1,19 +1,5 @@
 const wrapperElement = document.getElementById('wrapper');
 
-const winningCombinationsObject = (() => {
-    const winningCombinations = [
-        ["x","x","x","","","","","","",],
-        ["","","","x","x","x","","","",],
-        ["","","","","","","x","x","x",],
-        ["x","","","x","","","x","","",],
-        ["","x","","","x","","","x","",],
-        ["","","x","","","x","","","x",],
-        ["x","","","","x","","","","x",],
-        ["","","x","","x","","x","","",],
-    ];
-
-    return {winningCombinations}
-})();
 
 const gameBoardObject = (() => {
 
@@ -87,13 +73,55 @@ const game = (() => {
             if (space.textContent == "") {
                 gameBoardObject.setCell(board,currentPlayer.marker, index);
                 displayController.displayGameBoard(board);
+
+
+                const indii = board.map((element, index) => {
+                    if (element == currentPlayer.marker) {
+                        return index;
+                    };
+                }).filter(element => element >= 0);
+
+                const isSubset = (arr1, arr2) => {
+                    return arr2.every((element) => arr1.includes(element));
+                };
+
+                for (combination of winningCombinationsObject.winningCombinations) {
+                    if (isSubset(indii, combination)) {
+                        console.log("i won");
+                    };
+                }
+                // newOrder586 = [0,1,2];
+                // const buttPrince = winningCombinationsObject.winningCombinations[0];
+                // console.log(isSubset(buttPrince,newOrder586));
+
+
+
+
+                // if (winningCombinationsObject.winningCombinations.includes(indii)) {
+                //     console.log("i did it!!")
+                //     console.log(indii);
+                // }
+
                 changePlayer();
 
             }
-
         }
-    })
+    });
 
+    const winningCombinationsObject = (() => {
+        const winningCombinations = [
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6],
+        ];
+
+        return {winningCombinations}
+    })();
     // spaces.forEach((e, index) => {
     //     e.addEventListener('click', function(event) {
     //         gameBoardObject.setCell(board, player1.marker, index);
