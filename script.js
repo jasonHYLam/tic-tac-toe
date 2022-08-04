@@ -63,46 +63,54 @@ const game = (() => {
     displayController.displayGameBoard(board);
 
     // const spaces = document.querySelectorAll(".clickable-space");
+            gameContinue = true;
 
 
     document.addEventListener('click', function(e) {
         if (e.target.className == 'clickable-space') {
             let space = e.target;
             let index = Array.from(space.parentNode.children).indexOf(space);
+
+        
             
-            if (space.textContent == "") {
-                gameBoardObject.setCell(board,currentPlayer.marker, index);
-                displayController.displayGameBoard(board);
+            if (gameContinue) {
+                if (space.textContent == "") {
+                    gameBoardObject.setCell(board,currentPlayer.marker, index);
+                    displayController.displayGameBoard(board);
 
 
-                const indii = board.map((element, index) => {
-                    if (element == currentPlayer.marker) {
-                        return index;
+                    const indii = board.map((element, index) => {
+                        if (element == currentPlayer.marker) {
+                            return index;
+                        };
+                    }).filter(element => element >= 0);
+
+                    const isSubset = (arr1, arr2) => {
+                        return arr2.every((element) => arr1.includes(element));
                     };
-                }).filter(element => element >= 0);
 
-                const isSubset = (arr1, arr2) => {
-                    return arr2.every((element) => arr1.includes(element));
-                };
+                    // for (combination of winningCombinationsObject.winningCombinations) {
+                    //     if (isSubset(indii, combination)) {
+                    //         console.log(`${currentPlayer.name} won!`);
+                    //         gameContinue = false;
+                    //     };
+                    // }
+                    const thisIsTheOne = () => winningCombinationsObject.winningCombinations.some((e) => {
+                        return e.every((element) => indii.includes(element));
+                    });
 
-                for (combination of winningCombinationsObject.winningCombinations) {
-                    if (isSubset(indii, combination)) {
-                        console.log("i won");
-                    };
+                    if (thisIsTheOne()) {
+                        gameContinue = false;
+                    }
+
+                    // for (combination of winningCombinationsObject.winningCombinations) {
+                    //     if (isSubset(indii, combination)) {
+                    //         console.log(`${currentPlayer.name} won!`);
+                    //         gameContinue = false;
+                    //     };
+                    // }
+                    changePlayer();
                 }
-                // newOrder586 = [0,1,2];
-                // const buttPrince = winningCombinationsObject.winningCombinations[0];
-                // console.log(isSubset(buttPrince,newOrder586));
-
-
-
-
-                // if (winningCombinationsObject.winningCombinations.includes(indii)) {
-                //     console.log("i did it!!")
-                //     console.log(indii);
-                // }
-
-                changePlayer();
 
             }
         }
