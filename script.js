@@ -17,7 +17,7 @@ const winningCombinationsObject = (() => {
 
 const gameBoardObject = (() => {
 
-    const gameBoard = [" "," "," "," "," "," "," "," "," ",];
+    const gameBoard = Array(9).fill("");
     const gameBoardCurrent = ["x","x","x","x","x","x","x","x","x",];
     const gameBoard3 = ["1","2","3","4","5","6","7","8","9",];
 
@@ -76,20 +76,22 @@ const game = (() => {
 
     displayController.displayGameBoard(board);
 
-    const spaces = document.querySelectorAll(".clickable-space");
+    // const spaces = document.querySelectorAll(".clickable-space");
 
 
     document.addEventListener('click', function(e) {
         if (e.target.className == 'clickable-space') {
             let space = e.target;
             let index = Array.from(space.parentNode.children).indexOf(space);
-            gameBoardObject.setCell(board,currentPlayer.marker, index);
-            displayController.displayGameBoard(board);
-            changePlayer();
+            
+            if (space.textContent == "") {
+                gameBoardObject.setCell(board,currentPlayer.marker, index);
+                displayController.displayGameBoard(board);
+                changePlayer();
+
+            }
 
         }
-        
-
     })
 
     // spaces.forEach((e, index) => {
