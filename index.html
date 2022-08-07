@@ -7,9 +7,63 @@
     <title>Document</title>
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 1000,
+  'GRAD' 0,
+  'opsz' 48
+}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 700,
+  'GRAD' 200,
+  'opsz' 48
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="wrapper"></div>
+
+    <div id="form-container">
+        <form action="">
+            <h1>tic tac toe</h1>
+            <div id="player-container">
+                <div id="top-row">
+                    <div>
+                        <input type="text" id="player1-name-input" class="name-input" placeholder="Player One Name">
+                        <p id="player1-name-text"></p>
+                    </div>
+                    <div>
+                        <input type="text" id="player2-name-input" class="name-input" placeholder="Player Two Name">
+                        <p id="player2-name-text"></p>
+                    </div>
+                </div>
+
+                <div id="bottom-row">
+                    <p><span class="material-symbols-outlined">close</span></p>
+                    <input type="submit" name="" id="play-button" value="Play">
+                    <p><span class="material-symbols-outlined">circle</span> </p>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div id="wrapper">
+            <div id="grid-container"></div>
+    </div>
+    <div id="game-text-container">
+        <div id="current-turn-div"></div>
+        <div id="current-marker-div"></div>
+    </div>
     
 </body>
 </html>

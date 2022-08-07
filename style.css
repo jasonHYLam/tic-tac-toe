@@ -1,17 +1,47 @@
 body {
     margin: 0;
     padding: 0;
+    position: relative;
+    background-color: var(--background-color);
+    font-family: 'Play', sans-serif;
+    display: grid;
+    justify-content: center;
+    overflow: auto;
+    
+    
 }
 :root {
     --grid-length: 300px;
     --marker-size: 50px;
     --grid-gap-size: 20px;
+    --popup-container-height: 11vh;
+    --popup-container-width: 22vw;
+    --background-color: white;
+    --text-color: #0761A3;
+    --grid-cell-color: #E9237C;
+    --marker-color: #FFFFFF;
+    --name-input-background-color: #EFEFEF;
+    --current-cell-color: #f71179;
+    --current-cell-shadow: #de1895;
+    
 }
+
 .clickable-space {
-    background-color: yellowgreen;
+    cursor: pointer;
+    background-color: var(--grid-cell-color);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #wrapper {
+    display: grid;
+
+    justify-content: center;
+}
+
+#grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: var(--grid-length);
@@ -19,12 +49,109 @@ body {
     gap: var(--grid-gap-size);
 }
 
-
-#wrapper div {
-    font-size: var(--marker-size);
-    cursor: pointer;
+.text-container {
+    color: var(--marker-color);
 }
 
-button {
-    background-color: red;
+button,
+#play-button {
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+#play-button {
+    justify-self: center;
+    height: 28px;
+}
+
+#play-again-button {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.name-input {
+    background-color: var(--name-input-background-color);
+    border: none;
+    margin-top: 19px;
+    margin-bottom: 19px;
+    height: 30px;
+}
+
+#player-container {
+    /* width: 300px; */
+}
+#top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    text-align: center;
+}
+
+#bottom-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#bottom-row p,
+#bottom-row input {
+    width: 40px;
+}
+
+
+#form-container {
+    display: grid;
+    position: relative;
+    justify-content: center;
+    color: var(--text-color);
+}
+form {
+    width: 60vw;
+    /* height: 25vh; */
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#popup-container {
+    top: 80vh;
+    position: absolute;
+    left: calc((100vw - var(--popup-container-width))/2);
+    width: var(--popup-container-width);
+    height: var(--popup-container-height);
+}
+
+#popup-inner-container {
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+#popup-inner-container p {
+    margin-top: 10px;
+}
+#game-text-container {
+    display: grid;
+    justify-content: center;
+    padding-top: 40px;
+}
+#game-text-container div {
+    text-align: center;
+}
+.text-container {
+    position:absolute;
+    width: var(--marker-size);
+    height: var(--marker-size);
+    font-size: var(--marker-size);
+    text-align: center;
+    /* line-height controls centering of text */
+    line-height: 35px;
+}
+
+.current-cell {
+    background-color: var(--current-cell-color);
+    box-shadow: 0px 5px var(--current-cell-shadow);
 }
