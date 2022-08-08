@@ -4,8 +4,12 @@ const player1NameInput = document.getElementById("player1-name-input");
 const player2NameInput = document.getElementById("player2-name-input");
 const playButton = document.getElementById("play-button");
 
+const currentTurnDiv= document.getElementById('current-turn-div');
+const currentMarkerDiv= document.getElementById('current-marker-div');
+
 let player1NameText = document.getElementById('player1-name-text');
 let player2NameText = document.getElementById('player2-name-text');
+let playerNameInput = document.querySelectorAll('name-input');
 
 playButton.addEventListener('click', function(e) {
 
@@ -27,6 +31,10 @@ playButton.addEventListener('click', function(e) {
 
     const gameTextContainer = document.getElementById('game-text-container');
     gameTextContainer.style.display = 'grid';
+
+    game.currentPlayer = game.player1;
+
+    game.displayGameText(game.currentPlayer);
 
     playButton.style.display = 'none';
 
@@ -50,6 +58,7 @@ const gameBoardObject = (() => {
     return {getBoard, setCell, resetBoard};
 })();
 
+
 const displayController = (() => {
 
     const displayGameBoard = (board) => {
@@ -57,7 +66,6 @@ const displayController = (() => {
         removePreviousGameBoard();
         for (const space of board) {
             const spaceElement = document.createElement('div');
-            // spaceElement.className = "clickable-space";
             spaceElement.classList.add("clickable-space");
             textContainer = document.createElement('div');
             textContainer.className = "text-container";
@@ -68,11 +76,9 @@ const displayController = (() => {
     }
 
     const removePreviousGameBoard = () => {
-
         while (gridContainer.lastChild) {
             gridContainer.removeChild(gridContainer.lastChild);
         }
-
     }
 
     const declareCurrentCell = (index) => {
@@ -92,7 +98,6 @@ const game = (() => {
     const player1 = player(player1NameInput.value,"x");
     const player2 = player(player2NameInput.value,"o");
 
-    let currentPlayer = player1;
 
     const changePlayer = () => {
         if (currentPlayer == player1 ? currentPlayer = player2 : currentPlayer = player1);
@@ -100,30 +105,26 @@ const game = (() => {
 
     let board = gameBoardObject.getBoard();
 
+    let currentPlayer = player1;
+
     displayController.displayGameBoard(board);
 
     let gameStart = false;
     let gameContinue = true;
 
-
-    // if (gameStart) {
         document.addEventListener('click', function(e) {
-            // if (e.target.closest('.clickable-space').className == 'clickable-space') {
+        gameStart;
+        if (gameStart) {
             if (e.target.closest('.clickable-space').classList.contains('clickable-space')) {
-                
-            
                 
                 let space = e.target.closest('.clickable-space');
                 let index = Array.from(space.parentNode.children).indexOf(space);
-
-                // removeCurrentCell(space.parentNode);
-            
+                
                 if (gameContinue) {
                     if (space.textContent == "") {
                         gameBoardObject.setCell(board,currentPlayer.marker, index);
                         displayController.displayGameBoard(board);
                         displayController.declareCurrentCell(index);
-                        displayGameText();
                         console.log(board);
 
                         // logic that checks for wins
@@ -144,21 +145,26 @@ const game = (() => {
                         if (checkWin()) {
                             gameContinue = false;
                             createPopup('win');
+                            gameStart = false;
                         } else {
                             
                             if (!board.includes("")) {
                                 gameContinue = false;
                                 createPopup('tie');
+                                gameStart = false;
                             }
                         }
 
+                        //if no win/draw, change player
                         changePlayer();
+                        displayGameText(currentPlayer);
                     }
 
                 }
             }
+        }
         });
-    // }
+    
 
 
     const winningCombinationsObject = (() => {
@@ -232,16 +238,28 @@ const game = (() => {
         body.appendChild(popupContainer);
     }
 
-    const currentTurnDiv= document.getElementById('current-turn-div');
-    const currentMarkerDiv= document.getElementById('current-marker-div');
 
-    const displayGameText = () => {
+    const displayGameText = (currentPlayer) => {
         currentTurnDiv.textContent =`${currentPlayer.name}'s turn`;
         currentMarkerDiv.textContent =`${currentPlayer.marker}`;
     }
-    // createPopup();
 
-    return {player1, player2, gameStart}
+    const getGamestart = () => {
+        return gameStart
+    }
+
+    const setGamestart = (boolean) => {
+        gameStart = boolean;
+    }
+    return {
+        player1,
+        player2,
+        displayGameText,
+        get currentPlayer(){return currentPlayer},
+        set currentPlayer(val){currentPlayer = val},
+        get gameStart(){return gameStart},
+        set gameStart(boolean){gameStart = boolean},
+        }
 })();
 
 
